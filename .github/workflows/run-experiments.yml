@@ -1,0 +1,67 @@
+name: Run Experiments
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit_results:
+        description: "Commit updated results/summary back to repository"
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Validate required settings
+        env:
+          OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+          MODEL_NAME: ${{ secrets.MODEL_NAME }}
+        run: |
+          test -n "$OPENAI_BASE_URL" || (echo "Missing secret OPENAI_BASE_URL" && exit 1)
+          test -n "$MODEL_NAME" || (echo "Missing secret MODEL_NAME" && exit 1)
+
+      - name: Run all experiments
+        env:
+          OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          MODEL_NAME: ${{ secrets.MODEL_NAME }}
+          REQUEST_TIMEOUT_SEC: "900"
+        run: python runners/run_experiments.py --all
+
+      - name: Aggregate and build site data
+        run: |
+          python scripts/aggregate_results.py
+          python scripts/build_site.py
+
+      - name: Upload run artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: experiment-results-and-site
+          path: |
+            results
+            site
+
+      - name: Commit results (optional)
+        if: ${{ inputs.commit_results }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/summary.csv results/metrics/*.json
+          git diff --cached --quiet && echo "No changes to commit." && exit 0
+          git commit -m "chore: update experiment metrics"
+          git push

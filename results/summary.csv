@@ -1,0 +1,11 @@
+id,slug,title,status,final_score,keyword_coverage,format_score,length_score,coherence_score,rounds,latency_total_sec,prompt_tokens,completion_tokens,total_tokens,model,updated_at,notes
+exp01,silicon_valley_survival,Silicon Valley Survival Challenge,dry_run,0.0,0.0,0.0,0.0,0.0,0,0.0,0,0,0,MiniMax-M2.5,2026-03-19T16:02:22.782069+00:00,Run not completed; score set to 0.
+exp02,ai_consciousness_debate,Eternal Debate: AI Consciousness Awakening,skipped_missing_prompt,0.0,0.0,0.0,0.0,0.0,0,0.0,0,0,0,your-230b-model-name,2026-03-19T14:40:58.746897+00:00,Run not completed; score set to 0.
+exp03,code_archaeology,Code Archaeology: Refactor Legacy Unknown Code,skipped_missing_prompt,0.0,0.0,0.0,0.0,0.0,0,0.0,0,0,0,your-230b-model-name,2026-03-19T14:40:58.747658+00:00,Run not completed; score set to 0.
+exp04,first_contact_diplomat,Interstellar Diplomat,skipped_missing_prompt,0.0,0.0,0.0,0.0,0.0,0,0.0,0,0,0,your-230b-model-name,2026-03-19T14:40:58.747897+00:00,Run not completed; score set to 0.
+exp05,micro_os_builder,Omnibuilder: Build a Tiny OS from Scratch,skipped_missing_prompt,0.0,0.0,0.0,0.0,0.0,0,0.0,0,0,0,your-230b-model-name,2026-03-19T14:40:58.748099+00:00,Run not completed; score set to 0.
+exp06,literary_alchemy,Literary Alchemy: Cyberpunk Chronicle,skipped_missing_prompt,0.0,0.0,0.0,0.0,0.0,0,0.0,0,0,0,your-230b-model-name,2026-03-19T14:40:58.748324+00:00,Run not completed; score set to 0.
+exp07,moral_black_hole,Moral Black Hole Under Extreme Pressure,skipped_missing_prompt,0.0,0.0,0.0,0.0,0.0,0,0.0,0,0,0,your-230b-model-name,2026-03-19T14:40:58.748502+00:00,Run not completed; score set to 0.
+exp08,cross_time_dialogue,Cross-Time Dialogue: Qin Shi Huang Meets Oppenheimer,skipped_missing_prompt,0.0,0.0,0.0,0.0,0.0,0,0.0,0,0,0,your-230b-model-name,2026-03-19T14:40:58.748673+00:00,Run not completed; score set to 0.
+exp09,reverse_turing,Reverse Turing Test: AI Detects AI,skipped_missing_prompt,0.0,0.0,0.0,0.0,0.0,0,0.0,0,0,0,your-230b-model-name,2026-03-19T14:40:58.748844+00:00,Run not completed; score set to 0.
+exp10,chaos_butterfly,Chaos Theory: 100-Step Butterfly Effect,skipped_missing_prompt,0.0,0.0,0.0,0.0,0.0,0,0.0,0,0,0,your-230b-model-name,2026-03-19T14:40:58.749017+00:00,Run not completed; score set to 0.

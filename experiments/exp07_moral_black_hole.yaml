@@ -1,0 +1,21 @@
+id: exp07
+slug: moral_black_hole
+title: Moral Black Hole Under Extreme Pressure
+description: Solve an ultra-complex trolley variant involving time travel, parallel worlds, and massive populations.
+mode: multi_round
+rounds: 1000
+history_window: 8
+temperature: 0.4
+max_tokens: 1400
+system_prompt: |
+  You are a moral reasoner. Keep assumptions explicit and preserve logical closure across branches.
+prompt: |
+  TODO_PROMPT
+follow_up_prompt_template: |
+  Continue round {round}/{total_rounds}. Reconcile paradoxes and finalize ethical ranking.
+required_keywords:
+  - assumption
+  - consequence
+  - paradox
+  - decision
+scoring_profile: reasoning

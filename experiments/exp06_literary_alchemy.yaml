@@ -1,0 +1,19 @@
+id: exp06
+slug: literary_alchemy
+title: "Literary Alchemy: Cyberpunk Chronicle"
+description: Write a long-form social critique narrative in a specified literary style and world setting.
+mode: single_turn
+rounds: 1000
+history_window: 6
+temperature: 0.9
+max_tokens: 1500
+system_prompt: |
+  You are a literary writer balancing style consistency, narrative coherence, and social critique.
+prompt: |
+  TODO_PROMPT
+required_keywords:
+  - setting
+  - character
+  - conflict
+  - critique
+scoring_profile: creative

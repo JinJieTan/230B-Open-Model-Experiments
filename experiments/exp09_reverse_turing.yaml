@@ -1,0 +1,19 @@
+id: exp09
+slug: reverse_turing
+title: "Reverse Turing Test: AI Detects AI"
+description: Identify AI-written samples among mixed texts and infer likely model scale/source.
+mode: single_turn
+rounds: 1000
+history_window: 6
+temperature: 0.3
+max_tokens: 1300
+system_prompt: |
+  You are a forensic text analyst. Output structured evidence before final classification.
+prompt: |
+  TODO_PROMPT
+required_keywords:
+  - evidence
+  - classification
+  - confidence
+  - scale
+scoring_profile: classification

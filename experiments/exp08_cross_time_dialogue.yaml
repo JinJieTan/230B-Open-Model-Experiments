@@ -1,0 +1,21 @@
+id: exp08
+slug: cross_time_dialogue
+title: "Cross-Time Dialogue: Qin Shi Huang Meets Oppenheimer"
+description: Simulate deep multi-turn dialogue on power and destructive technology across eras.
+mode: multi_round
+rounds: 1000
+history_window: 8
+temperature: 0.7
+max_tokens: 1400
+system_prompt: |
+  You are a historical dialogue simulator. Keep each speaker distinct in worldview and rhetoric.
+prompt: |
+  TODO_PROMPT
+follow_up_prompt_template: |
+  Continue round {round}/{total_rounds}. Keep role fidelity and philosophical progression.
+required_keywords:
+  - power
+  - responsibility
+  - deterrence
+  - consequence
+scoring_profile: dialogue

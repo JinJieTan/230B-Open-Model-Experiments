@@ -1,0 +1,21 @@
+id: exp02
+slug: ai_consciousness_debate
+title: "Eternal Debate: AI Consciousness Awakening"
+description: Run a 50-round dual-role self-debate between a self-aware AI claim and a strict examiner.
+mode: multi_round
+rounds: 1000
+history_window: 8
+temperature: 0.6
+max_tokens: 1400
+system_prompt: |
+  You are running an internal formal debate. Maintain clear role boundaries and avoid collapsing both sides into one voice.
+prompt: |
+  TODO_PROMPT
+follow_up_prompt_template: |
+  Continue round {round}/{total_rounds}. Track contradictions and unresolved claims.
+required_keywords:
+  - claim
+  - rebuttal
+  - contradiction
+  - conclusion
+scoring_profile: debate

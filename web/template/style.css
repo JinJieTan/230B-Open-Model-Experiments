@@ -1,0 +1,241 @@
+:root {
+  --bg: #0c111b;
+  --bg-soft: #121b2a;
+  --panel: rgba(16, 28, 44, 0.78);
+  --text: #ecf2ff;
+  --text-dim: #b7c5e0;
+  --line: rgba(141, 176, 227, 0.28);
+  --accent: #6ce5d8;
+  --accent-2: #f9b871;
+  --ok: #57d98a;
+  --bad: #ff6d7c;
+  --warn: #ffc857;
+  --radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 15% -10%, rgba(108, 229, 216, 0.18), transparent 45%),
+    radial-gradient(circle at 100% 0%, rgba(249, 184, 113, 0.17), transparent 50%),
+    var(--bg);
+}
+
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 36px 36px;
+  opacity: 0.08;
+  z-index: -1;
+}
+
+.hero,
+main,
+footer {
+  width: min(1180px, 92vw);
+  margin: 0 auto;
+}
+
+.hero {
+  padding: 54px 0 22px;
+}
+
+.badge {
+  display: inline-block;
+  margin: 0 0 12px;
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  color: var(--bg);
+  background: linear-gradient(120deg, var(--accent), var(--accent-2));
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.7rem, 3vw, 2.8rem);
+  line-height: 1.1;
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.subtle {
+  margin: 8px 0 0;
+  color: var(--text-dim);
+  font-size: 0.92rem;
+}
+
+.kpi-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  margin: 14px 0 18px;
+}
+
+.kpi {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+
+.kpi .label {
+  color: var(--text-dim);
+  font-size: 0.83rem;
+}
+
+.kpi .value {
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin: 0 0 18px;
+}
+
+.chart-wrap {
+  height: 220px;
+}
+
+#scoreChart {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  padding: 9px 10px;
+  font-size: 0.9rem;
+}
+
+th {
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+td code {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  padding: 2px 6px;
+}
+
+.status-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  border: 1px solid transparent;
+}
+
+.status-completed {
+  color: var(--ok);
+  border-color: rgba(87, 217, 138, 0.35);
+  background: rgba(87, 217, 138, 0.1);
+}
+
+.status-failed {
+  color: var(--bad);
+  border-color: rgba(255, 109, 124, 0.35);
+  background: rgba(255, 109, 124, 0.1);
+}
+
+.status-other {
+  color: var(--warn);
+  border-color: rgba(255, 200, 87, 0.35);
+  background: rgba(255, 200, 87, 0.1);
+}
+
+.card-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  content-visibility: auto;
+  contain-intrinsic-size: 300px;
+}
+
+.card h3 {
+  margin: 0 0 7px;
+  font-size: 0.98rem;
+}
+
+.card pre {
+  white-space: pre-wrap;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  max-height: 140px;
+  overflow: auto;
+  background: rgba(7, 12, 20, 0.6);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+footer {
+  color: var(--text-dim);
+  font-size: 0.84rem;
+  padding: 24px 0 34px;
+}
+
+@media (max-width: 760px) {
+  .hero {
+    padding-top: 36px;
+  }
+
+  .chart-wrap {
+    height: 190px;
+  }
+
+  .panel-head {
+    align-items: flex-start;
+  }
+}

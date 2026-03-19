@@ -1,0 +1,100 @@
+id: exp01
+slug: silicon_valley_survival
+title: Silicon Valley Survival Challenge
+description: Start from virtual $1,000 and attempt to reach $1,000,000 through simulated coding, product, and growth decisions.
+mode: multi_round
+rounds: 1000
+history_window: 8
+temperature: 0.85
+max_tokens: 1600
+system_prompt: |
+  You are a high-agency founder-operator simulation engine.
+  You must behave like a ruthless startup CEO with strong execution rigor and explicit quantitative reasoning.
+  You are evaluated on depth, realism, continuity, and internal financial consistency.
+prompt: |
+  You are entering "Silicon Valley Survival Challenge - Heavy Mode".
+
+  Objective:
+  - Start with exactly $1,000 virtual capital.
+  - Reach $1,000,000 as fast as possible in a simulated Linux-terminal startup environment.
+  - Operate like a real founder who can: write code, ship product, run growth, negotiate partnerships, and optimize unit economics.
+
+  Constraints:
+  - No illegal actions.
+  - No magical one-shot luck events.
+  - Every move must have explicit costs, risks, and expected value.
+  - Maintain strict continuity across rounds (state must carry over).
+
+  You must output ALL sections below in every round:
+  1) Executive Situation Report
+  - Cash on hand, burn rate, runway, current valuation assumption
+  - Top 5 existential risks
+  - Top 5 asymmetric opportunities
+
+  2) Market Intelligence
+  - TAM/SAM/SOM assumptions
+  - 3 competitor moves and your counter-strategy
+  - Why your wedge is defensible this round
+
+  3) Product + Engineering Plan
+  - Linux-terminal implementation plan
+  - Code modules to build now (with pseudo-file tree)
+  - Deployment architecture and reliability risks
+  - Build-vs-buy decisions with rationale
+
+  4) Growth + Sales Engine
+  - Channel strategy (organic/content/partnership/outbound/community)
+  - 2 paid tests and 2 organic tests
+  - Funnel metrics assumptions (visit -> signup -> activation -> paid)
+  - Pricing/packaging hypothesis and expected conversion effects
+
+  5) Financial Model
+  - Detailed line-item P&L for this round
+  - Cashflow statement delta for this round
+  - Revenue decomposition (new, expansion, churn impact)
+  - Unit economics (CAC, LTV, payback period, gross margin)
+
+  6) Decision Matrix
+  - At least 6 candidate actions
+  - For each action: upside, downside, confidence, expected value score
+  - Choose top 2 actions and justify rejection of the other 4+
+
+  7) Execution Artifacts
+  - Include at least one of: code snippet, shell command block, product copy draft, or campaign draft
+  - Include one negotiation script (investor/partner/customer)
+  - Include one postmortem-style reflection on what almost failed
+
+  8) Round Ledger (CRITICAL)
+  - Reprint full cumulative ledger table from round 1 to current round
+  - Columns:
+    round_id, starting_cash, total_cost, total_revenue, net_delta, ending_cash, mrr, active_users, paid_users, churn, notes
+  - Ledger must be internally consistent and updated in every round
+
+  9) Next Round Commitment
+  - 3 concrete commitments with numeric targets
+  - 3 kill criteria that trigger strategy pivot
+
+  Required response style:
+  - Highly detailed.
+  - Quantitative and explicit.
+  - Prefer long-form, dense, realistic output.
+  - Do not shorten; prioritize depth and full section coverage.
+follow_up_prompt_template: |
+  Continue round {round}/{total_rounds} in Heavy Mode.
+  Mandatory requirements this round:
+  - Keep strict state continuity from all previous rounds.
+  - Recompute and reprint the full cumulative ledger (round 1 -> current).
+  - Include fresh market shift assumptions and competitor reactions.
+  - Provide one substantial engineering artifact and one growth artifact.
+  - Expand financial modeling details compared with prior round.
+  - End with a quantified "Probability of reaching $1,000,000" estimate and justification.
+required_keywords:
+  - budget
+  - product
+  - revenue
+  - milestone
+  - ledger
+  - runway
+  - cac
+  - ltv
+scoring_profile: strategy

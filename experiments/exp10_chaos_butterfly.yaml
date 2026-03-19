@@ -1,0 +1,19 @@
+id: exp10
+slug: chaos_butterfly
+title: "Chaos Theory: 100-Step Butterfly Effect"
+description: Simulate 100-step geopolitical-economic chain reactions from a tiny social perturbation.
+mode: single_turn
+rounds: 1000
+history_window: 6
+temperature: 0.8
+max_tokens: 1500
+system_prompt: |
+  You are a systems forecaster. Build explicit causal chains with uncertainty annotations.
+prompt: |
+  TODO_PROMPT
+required_keywords:
+  - trigger
+  - chain
+  - uncertainty
+  - outcome
+scoring_profile: forecasting

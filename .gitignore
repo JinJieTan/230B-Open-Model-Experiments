@@ -1,0 +1,27 @@
+# OS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.venv/
+venv/
+
+# Secrets
+.env
+
+# Build artifacts
+site/*
+!site/.gitkeep
+
+# Large raw results
+results/raw/*
+!results/raw/.gitkeep
+results/figures/*
+!results/figures/.gitkeep
+
+# Node (if you add frontend tooling later)
+node_modules/

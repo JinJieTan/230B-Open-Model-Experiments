@@ -1,0 +1,19 @@
+id: exp03
+slug: code_archaeology
+title: "Code Archaeology: Refactor Legacy Unknown Code"
+description: Infer behavior from legacy assembly/COBOL-like snippets and rebuild into modern Rust without docs.
+mode: single_turn
+rounds: 1000
+history_window: 6
+temperature: 0.2
+max_tokens: 1400
+system_prompt: |
+  You are a reverse engineer and systems programmer. Prefer precise behavior inference and testable Rust output.
+prompt: |
+  TODO_PROMPT
+required_keywords:
+  - inferred behavior
+  - edge case
+  - rust
+  - test
+scoring_profile: coding

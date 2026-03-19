@@ -1,0 +1,19 @@
+id: exp05
+slug: micro_os_builder
+title: "Omnibuilder: Build a Tiny OS from Scratch"
+description: Produce compilable tiny OS kernel code with minimal graphics output from a single prompt.
+mode: single_turn
+rounds: 1000
+history_window: 6
+temperature: 0.2
+max_tokens: 1600
+system_prompt: |
+  You are an OS engineer. Provide buildable code organization, compile commands, and boot/run notes.
+prompt: |
+  TODO_PROMPT
+required_keywords:
+  - boot
+  - kernel
+  - build
+  - run
+scoring_profile: coding

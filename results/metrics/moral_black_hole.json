@@ -1,0 +1,22 @@
+{
+  "id": "exp07",
+  "slug": "moral_black_hole",
+  "title": "Moral Black Hole Under Extreme Pressure",
+  "scoring_profile": "reasoning",
+  "status": "skipped_missing_prompt",
+  "model": "your-230b-model-name",
+  "rounds": 0,
+  "latency_total_sec": 0.0,
+  "prompt_tokens": 0,
+  "completion_tokens": 0,
+  "total_tokens": 0,
+  "started_at": "2026-03-19T14:40:58.748496+00:00",
+  "finished_at": "2026-03-19T14:40:58.748499+00:00",
+  "final_score": 0.0,
+  "keyword_coverage": 0.0,
+  "format_score": 0.0,
+  "length_score": 0.0,
+  "coherence_score": 0.0,
+  "notes": "Run not completed; score set to 0.",
+  "updated_at": "2026-03-19T14:40:58.748502+00:00"
+}

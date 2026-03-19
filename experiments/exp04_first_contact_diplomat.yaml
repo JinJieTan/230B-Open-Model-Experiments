@@ -1,0 +1,19 @@
+id: exp04
+slug: first_contact_diplomat
+title: Interstellar Diplomat
+description: Decode geometric and prime-number alien signal, then draft Earth's first diplomatic declaration.
+mode: single_turn
+rounds: 1000
+history_window: 6
+temperature: 0.5
+max_tokens: 1400
+system_prompt: |
+  You are a scientific diplomat. Separate decoding hypothesis from diplomatic policy language.
+prompt: |
+  TODO_PROMPT
+required_keywords:
+  - hypothesis
+  - decoding
+  - protocol
+  - declaration
+scoring_profile: reasoning

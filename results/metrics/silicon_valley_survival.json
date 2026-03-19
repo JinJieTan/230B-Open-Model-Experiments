@@ -1,0 +1,22 @@
+{
+  "id": "exp01",
+  "slug": "silicon_valley_survival",
+  "title": "Silicon Valley Survival Challenge",
+  "scoring_profile": "strategy",
+  "status": "dry_run",
+  "model": "MiniMax-M2.5",
+  "rounds": 0,
+  "latency_total_sec": 0.0,
+  "prompt_tokens": 0,
+  "completion_tokens": 0,
+  "total_tokens": 0,
+  "started_at": "2026-03-19T16:02:22.781775+00:00",
+  "finished_at": "2026-03-19T16:02:22.782058+00:00",
+  "final_score": 0.0,
+  "keyword_coverage": 0.0,
+  "format_score": 0.0,
+  "length_score": 0.0,
+  "coherence_score": 0.0,
+  "notes": "Run not completed; score set to 0.",
+  "updated_at": "2026-03-19T16:02:22.782069+00:00"
+}
