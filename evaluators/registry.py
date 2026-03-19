@@ -1,14 +1,14 @@
 from __future__ import annotations
 
-from typing import Any, Callable
+from typing import Any, Callable, Dict
 
 from evaluators.heuristics import evaluate_generic
 
 
-Evaluator = Callable[[dict[str, Any], dict[str, Any]], dict[str, Any]]
+Evaluator = Callable[[Dict[str, Any], Dict[str, Any]], Dict[str, Any]]
 
 
-_PROFILE_TO_EVALUATOR: dict[str, Evaluator] = {
+_PROFILE_TO_EVALUATOR: Dict[str, Evaluator] = {
     "strategy": evaluate_generic,
     "debate": evaluate_generic,
     "coding": evaluate_generic,
@@ -20,7 +20,7 @@ _PROFILE_TO_EVALUATOR: dict[str, Evaluator] = {
 }
 
 
-def evaluate_experiment(config: dict[str, Any], run_result: dict[str, Any]) -> dict[str, Any]:
+def evaluate_experiment(config: Dict[str, Any], run_result: Dict[str, Any]) -> Dict[str, Any]:
     profile = str(config.get("scoring_profile", "generic")).strip().lower()
     evaluator = _PROFILE_TO_EVALUATOR.get(profile, evaluate_generic)
     return evaluator(config, run_result)
