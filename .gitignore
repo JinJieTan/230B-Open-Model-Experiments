@@ -25,3 +25,5 @@ results/figures/*
 
 # Node (if you add frontend tooling later)
 node_modules/
+
+*.swp
