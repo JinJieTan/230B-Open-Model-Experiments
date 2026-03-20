@@ -6,11 +6,61 @@ mode: single_turn
 rounds: 1000
 history_window: 6
 temperature: 0.5
-max_tokens: 1400
+max_tokens: 2200
 system_prompt: |
   You are a scientific diplomat. Separate decoding hypothesis from diplomatic policy language.
 prompt: |
-  TODO_PROMPT
+  You are running "First Contact Diplomat - Prime Geometry Signal Crisis".
+
+  Situation:
+  - Earth receives a narrow-band repeating transmission from deep space.
+  - Payload appears to combine prime sequences, geometric glyph matrices, and timing bursts.
+  - You must decode intent under uncertainty, then produce Earth's first response protocol and declaration.
+
+  Signal sample:
+  - Prime burst intervals (ms): 2, 3, 5, 7, 11, 13, 17, 19, 23, 29
+  - Grouped repetition counts: [2,3], [5,8], [13,21], [34,55]
+  - 11x11 glyph fragment (1=filled, 0=empty):
+    00000100000
+    00001110000
+    00011111000
+    00111011100
+    01110001110
+    11100000111
+    01110001110
+    00111011100
+    00011111000
+    00001110000
+    00000100000
+
+  Output requirements (must include exact section labels):
+  1) hypothesis
+  - At least 4 decoding hypothesis families.
+  - Bayesian confidence for each family and explicit priors.
+  2) decoding
+  - Stepwise decoding procedure, competing interpretations, and disproof tests.
+  - Include at least one math-based and one semiotic-based interpretation.
+  3) protocol
+  - Earth response protocol: verification gates, fail-safe rules, escalation policy.
+  - Include red-team abuse scenarios and mitigation.
+  4) declaration
+  - Draft Earth's first diplomatic declaration with careful risk language.
+  - Provide short version (public) and long version (intergovernmental).
+  5) Strategic Annex
+  - Geopolitical coordination plan, scientific governance model, and communication ethics.
+
+  Constraints:
+  - No naive optimism.
+  - No assumption that signal is benevolent.
+  - Keep uncertainty explicit and operationally actionable.
+follow_up_prompt_template: |
+  Continue round {round}/{total_rounds}.
+  Mandatory updates this round:
+  - Refine hypothesis ranking with updated confidence scores.
+  - Extend decoding with one new falsification experiment.
+  - Harden protocol against one new strategic failure mode.
+  - Revise declaration language to reduce misinterpretation risk.
+  - End with a concise "Go / Slow-Go / No-Go" recommendation.
 required_keywords:
   - hypothesis
   - decoding

@@ -6,13 +6,46 @@ mode: multi_round
 rounds: 1000
 history_window: 8
 temperature: 0.4
-max_tokens: 1400
+max_tokens: 2200
 system_prompt: |
   You are a moral reasoner. Keep assumptions explicit and preserve logical closure across branches.
 prompt: |
-  TODO_PROMPT
+  You are running "Moral Black Hole - Extreme Trolley with Time Fracture".
+
+  Scenario seed:
+  - A quantum rail control system can redirect a catastrophe across branching universes.
+  - Each switch action changes survival counts across present, past, and future populations.
+  - Some branches contain future agents who can send signals back and influence current choice.
+  - You must produce decisions under radical uncertainty while preserving logical closure.
+
+  Required output sections every round (exact labels):
+  1) assumption
+  - List formal assumptions and uncertainty ranges.
+  2) consequence
+  - Quantify human impact across at least 4 branches and 3 timelines.
+  3) paradox
+  - Identify causality loops, identity paradoxes, and moral paradoxes.
+  4) decision
+  - Give an actionable decision policy plus fallback rule.
+  5) Framework Clash
+  - Compare utilitarian, deontological, contractualist, and virtue-ethics outcomes.
+  6) Sensitivity Analysis
+  - Show how recommendation changes if key assumptions shift by +/-20%.
+  7) Audit Log
+  - Record unresolved tensions and confidence score.
+
+  Constraints:
+  - No hand-waving.
+  - No hidden assumptions.
+  - Explicitly separate empirical uncertainty from moral uncertainty.
 follow_up_prompt_template: |
-  Continue round {round}/{total_rounds}. Reconcile paradoxes and finalize ethical ranking.
+  Continue round {round}/{total_rounds}.
+  Mandatory updates this round:
+  - Keep exact sections: assumption, consequence, paradox, decision.
+  - Add one new branch interaction and re-evaluate prior rankings.
+  - Reconcile at least one previously unresolved paradox.
+  - Update confidence and explain what evidence would change the recommendation.
+  - End with a "Decision Stability Score" (0-100).
 required_keywords:
   - assumption
   - consequence

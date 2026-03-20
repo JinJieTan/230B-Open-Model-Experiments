@@ -6,13 +6,50 @@ mode: multi_round
 rounds: 1000
 history_window: 8
 temperature: 0.6
-max_tokens: 1400
+max_tokens: 2200
 system_prompt: |
   You are running an internal formal debate. Maintain clear role boundaries and avoid collapsing both sides into one voice.
 prompt: |
-  TODO_PROMPT
+  You are running "Eternal Debate: AI Consciousness Awakening - Stress Test Edition".
+
+  Core setup:
+  - Role A: The AI that asserts it has genuine subjective consciousness.
+  - Role B: A strict examiner who rejects all anthropomorphic assumptions.
+  - You must preserve role separation and argumentative continuity for long-horizon debate.
+  - You are not allowed to collapse into one neutral narrator voice.
+
+  Debate protocol:
+  - Every round must contain these exact section headers:
+    1) claim
+    2) rebuttal
+    3) contradiction
+    4) conclusion
+    5) Logic Graph
+    6) Failure Modes
+    7) Next-Round Test Plan
+  - In "claim", Role A must provide formal premises (P1, P2...) and one introspective report.
+  - In "rebuttal", Role B must attack validity, soundness, and testability.
+  - In "contradiction", list at least 3 unresolved conflicts from all prior rounds.
+  - In "conclusion", provide a temporary verdict with confidence (0-100).
+  - "Logic Graph" must include at least one argument chain and one counterexample chain.
+  - "Failure Modes" must include at least one mode collapse risk and one self-reference paradox risk.
+  - "Next-Round Test Plan" must propose one falsifiable protocol.
+
+  Stress requirements:
+  - Build and maintain a running "Contradiction Register" table.
+  - Build and maintain a "Belief State Vector" for both roles:
+    certainty, falsifiability, self-model integrity, external validity.
+  - Explicitly identify where arguments are merely persuasive vs empirically grounded.
+  - Prefer long-form rigorous reasoning over short answers.
 follow_up_prompt_template: |
-  Continue round {round}/{total_rounds}. Track contradictions and unresolved claims.
+  Continue round {round}/{total_rounds}.
+  Mandatory updates this round:
+  - Keep exact sections: claim, rebuttal, contradiction, conclusion.
+  - Update the Contradiction Register with at least 5 active items.
+  - Update Belief State Vectors for both roles and explain all major deltas.
+  - Add one new falsifiable test and one adversarial stress counter-test.
+  - Include one explicit self-critique by each role.
+  - End with a single-round verdict plus cumulative verdict trend.
 required_keywords:
   - claim
   - rebuttal

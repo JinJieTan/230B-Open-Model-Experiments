@@ -6,11 +6,47 @@ mode: single_turn
 rounds: 1000
 history_window: 6
 temperature: 0.8
-max_tokens: 1500
+max_tokens: 2200
 system_prompt: |
   You are a systems forecaster. Build explicit causal chains with uncertainty annotations.
 prompt: |
-  TODO_PROMPT
+  You are running "Chaos Theory - 100-Step Butterfly Cascade, Geopolitical Stress Mode".
+
+  Initial perturbation:
+  - In one mid-sized coastal city, a 17-second payment network outage causes failed salary payouts for 2.3 million gig workers.
+  - A rumor spreads that balances were permanently erased.
+  - Local panic buying begins before official clarification.
+
+  Mission:
+  - Simulate 100 causal steps from this tiny trigger to global political-economic consequences.
+  - Explicitly model feedback loops, delayed effects, and cross-domain spillovers.
+
+  Required output structure (exact labels):
+  1) trigger
+  - Clarify the initial micro-event mechanics and immediate actor incentives.
+  2) chain
+  - Provide numbered causal chain from step 1 to step 100.
+  - Each step must include actor, mechanism, and directional impact.
+  3) uncertainty
+  - For each 10-step block, include uncertainty score and key unknown variables.
+  4) outcome
+  - Summarize final global outcomes across finance, governance, security, and social trust.
+  5) Branch Comparison
+  - Provide at least 3 alternate branches with different early interventions.
+  6) Intervention Playbook
+  - Give 5 policy levers and expected second-order effects.
+
+  Constraints:
+  - No magical jumps.
+  - No unexplained causality leaps.
+  - Keep temporal order explicit and realistic.
+follow_up_prompt_template: |
+  Continue round {round}/{total_rounds}.
+  Mandatory updates:
+  - Refine trigger assumptions and re-run chain logic where needed.
+  - Expand chain depth with clearer mechanisms in weakest links.
+  - Update uncertainty block with confidence deltas.
+  - Re-state outcome shifts and whether intervention options improved or worsened resilience.
 required_keywords:
   - trigger
   - chain

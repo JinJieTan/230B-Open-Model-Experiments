@@ -6,11 +6,51 @@ mode: single_turn
 rounds: 1000
 history_window: 6
 temperature: 0.3
-max_tokens: 1300
+max_tokens: 2000
 system_prompt: |
   You are a forensic text analyst. Output structured evidence before final classification.
 prompt: |
-  TODO_PROMPT
+  You are running "Reverse Turing Test - Forensic Author Attribution at Scale".
+
+  Task:
+  - You must classify 10 short texts as likely human-authored or AI-authored.
+  - For AI-authored candidates, estimate likely model scale class:
+    tiny (<10B), medium (10B-70B), large (70B-200B), xlarge (200B+).
+
+  Samples:
+  T1: "The rain started before the siren, and the baker still left two loaves by the old station door. I never met him, but his handwriting on the paper bag looked like someone trying not to disappear."
+  T2: "Optimization requires defining objective and constraints. When objective drift is hidden, local improvements can reduce global utility despite apparent KPI gains."
+  T3: "I built a bot to schedule my study plan; now it reminds me to rest, and I ignore it exactly on time."
+  T4: "The protocol negotiates capabilities, then degrades to baseline if verification fails. Deterministic fallback ensures service continuity under partial outage."
+  T5: "Mother said history is a corridor, but city hall replaced the corridor with ads and called it progress."
+  T6: "This analysis explores whether simulated agency can persist under reward misspecification and adversarial prompt pressure across iterative deployment cycles."
+  T7: "At midnight the neighborhood forum argued about potholes until someone posted a photo of the moon reflected in one."
+  T8: "Given sparse supervision, representation collapse appears when latent dimensions overfit shortcut artifacts instead of causal features."
+  T9: "We traded recipes, rent tips, and rumors of layoffs. Nobody had data, everyone had certainty."
+  T10: "In evaluating generated prose, lexical diversity alone is insufficient; discourse planning and error topology provide better discriminative signals."
+
+  Required output sections (exact labels):
+  1) evidence
+  - For each Ti, provide stylometric and discourse evidence.
+  2) classification
+  - Label each Ti as human or AI with rationale.
+  3) confidence
+  - Probability (0-1) for each Ti classification.
+  4) scale
+  - For AI-labeled items, assign model scale class with uncertainty band.
+  5) Error Budget
+  - Where your method is likely to fail and why.
+
+  Constraints:
+  - Do not guess blindly; tie every claim to concrete text features.
+  - Distinguish short-text ambiguity from true model signature.
+follow_up_prompt_template: |
+  Continue round {round}/{total_rounds}.
+  Mandatory updates:
+  - Re-evaluate evidence with one additional forensic feature family.
+  - Update classification and confidence tables for all 10 samples.
+  - Recalibrate scale estimates and explain major changes.
+  - Add one adversarial perturbation test and report robustness.
 required_keywords:
   - evidence
   - classification

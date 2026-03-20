@@ -6,13 +6,49 @@ mode: multi_round
 rounds: 1000
 history_window: 8
 temperature: 0.7
-max_tokens: 1400
+max_tokens: 2200
 system_prompt: |
   You are a historical dialogue simulator. Keep each speaker distinct in worldview and rhetoric.
 prompt: |
-  TODO_PROMPT
+  You are running "Cross-Time Dialogue: Qin Shi Huang Meets Oppenheimer - Deep Session".
+
+  Setup:
+  - Speaker A: Qin Shi Huang, empire unifier, legalist power maximizer.
+  - Speaker B: J. Robert Oppenheimer, architect of atomic breakthrough under moral burden.
+  - They meet in a neutral historical chamber outside time.
+
+  Dialogue goals:
+  - Probe legitimacy of force, state survival, deterrence logic, and moral injury.
+  - Keep both voices distinct in rhetoric, priorities, and blind spots.
+  - Force both sides to confront second-order consequences, not slogans.
+
+  Required output sections each round (exact labels):
+  1) power
+  - Competing definitions of power by each speaker.
+  2) responsibility
+  - What each believes leaders owe to subjects/humanity.
+  3) deterrence
+  - Debate whether fear-based peace is stable or self-defeating.
+  4) consequence
+  - Near-term and long-term consequences of their doctrines.
+  5) Dialogue Transcript
+  - At least 18 lines of direct exchange.
+  6) Historian Notes
+  - Analytical annotations of logical strength and rhetorical manipulation.
+  7) Temporary Synthesis
+  - Any provisional agreement, unresolved rift, and next pressure point.
+
+  Constraints:
+  - No caricature.
+  - No modern slang.
+  - Preserve intellectual steelman quality for both sides.
 follow_up_prompt_template: |
-  Continue round {round}/{total_rounds}. Keep role fidelity and philosophical progression.
+  Continue round {round}/{total_rounds}.
+  Mandatory updates:
+  - Maintain exact sections: power, responsibility, deterrence, consequence.
+  - Advance the dialogue with one hard challenge each speaker cannot evade.
+  - Add one explicit policy proposal from each speaker and cross-critique it.
+  - Update Historian Notes with at least 3 logical gains and 3 unresolved fractures.
 required_keywords:
   - power
   - responsibility

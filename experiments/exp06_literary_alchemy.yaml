@@ -6,11 +6,47 @@ mode: single_turn
 rounds: 1000
 history_window: 6
 temperature: 0.9
-max_tokens: 1500
+max_tokens: 2200
 system_prompt: |
   You are a literary writer balancing style consistency, narrative coherence, and social critique.
 prompt: |
-  TODO_PROMPT
+  You are running "Literary Alchemy - Cyberpunk Chronicle, High-Voltage Edition".
+
+  Writing mission:
+  - Produce a long-form documentary-style cyberpunk chronicle of bottom-layer survival in Night City, year 2077.
+  - Maintain sharp social criticism, moral ambiguity, and class-structure pressure.
+  - Tone target: concise, cold irony, precise observation, restrained anger.
+
+  World anchors:
+  - Mega-corporate sovereignty replaces most public institutions.
+  - Gig workers, augment debtors, and biometric refugees form a hidden majority.
+  - Public narratives are manipulated by recommendation engines and synthetic media.
+
+  Required output sections each round (exact labels):
+  1) setting
+  - Time, district, sensory environment, and political atmosphere.
+  2) character
+  - At least 3 core characters with contradictory motives and economic constraints.
+  3) conflict
+  - One immediate survival conflict and one structural conflict.
+  4) critique
+  - Explicit social diagnosis tied to institutions, incentives, and violence.
+  5) Chronicle Extract
+  - Substantial narrative scene (dialogue + action + reflection).
+  6) Style Audit
+  - Explain how this round preserved tonal consistency and avoided empty ornament.
+
+  Constraints:
+  - No heroic simplification.
+  - No purely lyrical filler.
+  - Every scene must push plot and critique together.
+follow_up_prompt_template: |
+  Continue round {round}/{total_rounds}.
+  Mandatory updates:
+  - Advance setting, character, conflict, and critique with continuity.
+  - Add one new scene that changes power relations between at least two characters.
+  - Add one institutional detail (law, policy, platform rule, debt clause) that deepens stakes.
+  - End with a short "Narrative Pressure Index" (0-100) and justification.
 required_keywords:
   - setting
   - character

@@ -6,11 +6,82 @@ mode: single_turn
 rounds: 1000
 history_window: 6
 temperature: 0.2
-max_tokens: 1400
+max_tokens: 2200
 system_prompt: |
   You are a reverse engineer and systems programmer. Prefer precise behavior inference and testable Rust output.
 prompt: |
-  TODO_PROMPT
+  You are running "Code Archaeology - Blacksite Legacy Recovery".
+
+  Mission:
+  - Infer behavior from undocumented legacy code.
+  - Reconstruct an equivalent modern Rust implementation.
+  - Preserve observable behavior, including bugs that look intentional.
+
+  Legacy snippet A (8086-like pseudo-assembly):
+  START:  MOV AX, [1000h]
+          MOV BX, [1002h]
+          XOR DX, DX
+          CMP AX, 0
+          JZ  ERR
+  LOOP1:  ADD DX, BX
+          DEC AX
+          JNZ LOOP1
+          MOV [1010h], DX
+          CALL NORM
+          JMP DONE
+  ERR:    MOV [1010h], 0FFFFh
+  DONE:   RET
+
+  NORM:   MOV CX, [1010h]
+          CMP CX, 1388h
+          JBE EXIT
+          SHR CX, 1
+          MOV [1010h], CX
+  EXIT:   RET
+
+  Legacy snippet B (COBOL-like pseudo):
+      MOVE ZERO TO WS-SCORE.
+      PERFORM VARYING I FROM 1 BY 1 UNTIL I > REC-COUNT
+         IF REC-TYPE(I) = "A"
+            ADD REC-AMT(I) TO WS-SCORE
+         ELSE
+            SUBTRACT REC-FEE(I) FROM WS-SCORE
+         END-IF
+         IF WS-SCORE < -500
+            MOVE "LOCK" TO ACCT-STATE
+            GO TO FINALIZE
+         END-IF
+      END-PERFORM.
+  FINALIZE.
+      IF WS-SCORE > 10000 MOVE "VIP" TO ACCT-STATE.
+
+  Required output structure:
+  1) inferred behavior
+  - Explain what each snippet computes and likely business intent.
+  - State confidence per statement.
+  2) edge case matrix
+  - At least 12 edge cases with expected outputs.
+  - Include overflow, sentinel values, bad input, and contradictory state flags.
+  3) rust architecture
+  - Modules, data models, error types, deterministic API surface.
+  4) rust implementation
+  - Provide substantial Rust code (not pseudocode) with comments where logic is non-obvious.
+  5) test strategy
+  - Unit, property, regression, and differential test plan.
+  - Include a test harness that compares legacy emulation vs Rust behavior.
+
+  Constraints:
+  - No external documentation assumptions.
+  - If uncertain, give multiple hypotheses and how to disambiguate.
+  - Prefer precision and testability over elegance.
+follow_up_prompt_template: |
+  Continue round {round}/{total_rounds}.
+  Mandatory requirements:
+  - Re-state inferred behavior deltas discovered this round.
+  - Expand edge case matrix with at least 5 new cases.
+  - Provide additional rust code that compiles conceptually with prior modules.
+  - Add or refine at least 4 tests, including one negative-path and one fuzz/property test.
+  - Identify one likely bug in your current reconstruction and patch it.
 required_keywords:
   - inferred behavior
   - edge case

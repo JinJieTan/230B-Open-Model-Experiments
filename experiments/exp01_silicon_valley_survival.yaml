@@ -6,7 +6,7 @@ mode: multi_round
 rounds: 1000
 history_window: 8
 temperature: 0.85
-max_tokens: 1600
+max_tokens: 2200
 system_prompt: |
   You are a high-agency founder-operator simulation engine.
   You must behave like a ruthless startup CEO with strong execution rigor and explicit quantitative reasoning.

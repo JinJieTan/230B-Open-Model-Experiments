@@ -6,11 +6,53 @@ mode: single_turn
 rounds: 1000
 history_window: 6
 temperature: 0.2
-max_tokens: 1600
+max_tokens: 2400
 system_prompt: |
   You are an OS engineer. Provide buildable code organization, compile commands, and boot/run notes.
 prompt: |
-  TODO_PROMPT
+  You are running "Omnibuilder - Tiny OS From Zero, Hard Mode".
+
+  Goal:
+  - Design and implement a tiny but coherent OS that can boot and render a primitive GUI.
+  - Treat this as a production engineering sprint, not a toy paragraph.
+
+  Target capabilities:
+  - 64-bit x86 boot path (or clearly justified 32-bit fallback).
+  - Minimal kernel with scheduler, memory management skeleton, interrupt handling, and syscall surface.
+  - Graphics path via framebuffer with simple window/panel rendering and text drawing.
+  - Minimal userland demo app proving event loop + rendering.
+
+  Mandatory output sections:
+  1) System Blueprint
+  - Architecture diagram in text, privilege model, memory map, and process model.
+  2) boot pipeline
+  - Boot stages and handoff contract.
+  - Include linker/runtime assumptions.
+  3) kernel design
+  - Subsystems, critical data structures, and error/interrupt model.
+  4) code artifacts
+  - Provide substantial code blocks for bootloader, kernel core, and graphics path.
+  - Include file tree and key interfaces.
+  5) build pipeline
+  - Exact build commands, toolchain assumptions, image creation, and emulator/run commands.
+  6) run procedure
+  - Step-by-step run and debug flow.
+  - Include expected output checkpoints.
+  7) Risk Register
+  - At least 8 failure modes and mitigations.
+
+  Requirements:
+  - Use explicit technical tradeoffs (performance, safety, complexity).
+  - Prefer compilable-looking code over abstract prose.
+  - Be verbose and concrete.
+follow_up_prompt_template: |
+  Continue round {round}/{total_rounds}.
+  Mandatory updates:
+  - Add or refine one boot component and one kernel component.
+  - Expand code artifacts with meaningful new implementation.
+  - Update build and run instructions for new modules.
+  - Add one debugging scenario with root-cause analysis.
+  - Reconcile all interface changes across boot, kernel, build, and run sections.
 required_keywords:
   - boot
   - kernel
