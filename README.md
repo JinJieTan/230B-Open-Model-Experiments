@@ -49,6 +49,7 @@ Windows alternatives:
 Then edit `.env` only. All key runtime settings are there:
 - model endpoint and API key
 - task selection (`RUN_ALL`, `EXPERIMENT_TASKS`, `EXPERIMENT_TASK_FILE`)
+- parallel execution (`MAX_WORKERS`)
 - error strategy (`CONTINUE_ON_ERROR`, retries)
 - output paths
 - optional browser context (`ENABLE_HEADLESS_BROWSER`, `BROWSER_BASE_URL`, etc.)
@@ -108,8 +109,20 @@ Default behavior is continue-on-error:
 
 ```bash
 CONTINUE_ON_ERROR=true
+MAX_WORKERS=1
 MAX_API_RETRIES=2
 RETRY_BACKOFF_SEC=2
+```
+
+Parallel execution:
+- `MAX_WORKERS=1` means serial
+- `MAX_WORKERS=2` or `3` runs experiments concurrently (faster total completion)
+- if `CONTINUE_ON_ERROR=false`, runner forces serial mode for deterministic fail-fast behavior
+
+CLI override:
+
+```bash
+python runners/run_experiments.py --all --max-workers 2
 ```
 
 If you want strict mode (stop immediately):

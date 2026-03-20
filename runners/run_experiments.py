@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 import json
 from pathlib import Path
@@ -271,6 +272,53 @@ def run_single_experiment(
     return run_result, enrich_metric(config, run_result, metric)
 
 
+def execute_single_config(
+    config: dict[str, Any],
+    *,
+    client: OpenAICompatibleClient | None,
+    model_name: str,
+    dry_run: bool,
+    max_api_retries: int,
+    retry_backoff_sec: float,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    slug = str(config.get("slug", "unknown")).strip()
+    print(f"[run] {slug}", flush=True)
+
+    try:
+        return run_single_experiment(
+            config,
+            client=client,
+            model_name=model_name,
+            dry_run=dry_run,
+            max_api_retries=max_api_retries,
+            retry_backoff_sec=retry_backoff_sec,
+        )
+    except Exception as exc:  # noqa: BLE001
+        run_result = {
+            "id": config.get("id", slug),
+            "slug": slug,
+            "title": config.get("title", slug),
+            "model": model_name,
+            "started_at": utcnow_iso(),
+            "finished_at": utcnow_iso(),
+            "status": "failed",
+            "config_file": config.get("_file"),
+            "rounds": [],
+            "error": f"Unhandled runner exception: {exc}\n{traceback.format_exc()}",
+        }
+        metric = {
+            "status": "failed",
+            "final_score": 0.0,
+            "keyword_coverage": 0.0,
+            "format_score": 0.0,
+            "length_score": 0.0,
+            "coherence_score": 0.0,
+            "notes": "Unhandled runner exception.",
+        }
+        metric = enrich_metric(config, run_result, metric)
+        return run_result, metric
+
+
 def build_config_error_outputs(config: dict[str, Any], model_name: str) -> tuple[dict[str, Any], dict[str, Any]]:
     started_at = utcnow_iso()
     finished_at = utcnow_iso()
@@ -434,6 +482,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dry-run", action="store_true", help="Skip model calls and emit dry-run files.")
     parser.add_argument("--max-retries", type=int, default=None, help="API retry count for each model request.")
     parser.add_argument("--retry-backoff-sec", type=float, default=None, help="Backoff seconds per retry step.")
+    parser.add_argument(
+        "--max-workers",
+        type=int,
+        default=None,
+        help="Number of experiments to run in parallel. 1 means serial.",
+    )
     parser.add_argument("--stop-on-error", action="store_true", help="Stop remaining tasks after first failed task.")
     return parser.parse_args()
 
@@ -452,6 +506,8 @@ def main() -> int:
     retry_backoff_sec = (
         args.retry_backoff_sec if args.retry_backoff_sec is not None else env_float("RETRY_BACKOFF_SEC", 2.0)
     )
+    max_workers = args.max_workers if args.max_workers is not None else env_int("MAX_WORKERS", 1)
+    max_workers = max(1, max_workers)
 
     valid_configs, invalid_configs = load_configs(config_dir)
     if not valid_configs and not invalid_configs:
@@ -481,7 +537,7 @@ def main() -> int:
     )
 
     if unmatched_tokens:
-        print(f"[warn] Unknown tasks ignored: {', '.join(unmatched_tokens)}")
+        print(f"[warn] Unknown tasks ignored: {', '.join(unmatched_tokens)}", flush=True)
 
     if not selected_valid and not selected_invalid:
         raise SystemExit("No matching experiments selected. Check .env EXPERIMENT_TASKS or CLI --tasks.")
@@ -501,21 +557,28 @@ def main() -> int:
         raw_payload, metric_payload = build_config_error_outputs(cfg, model_name=model_name)
         write_json(raw_dir / f"{slug}.json", raw_payload)
         write_json(metrics_dir / f"{slug}.json", metric_payload)
-        print(f"[config-error] {slug} status=config_error")
+        print(f"[config-error] {slug} status=config_error", flush=True)
 
         if not continue_on_error:
-            print("[stop] Stopping due to config_error and CONTINUE_ON_ERROR disabled.")
+            print("[stop] Stopping due to config_error and CONTINUE_ON_ERROR disabled.", flush=True)
             stop_requested = True
             break
 
-    for config in selected_valid:
-        if stop_requested:
-            break
-        slug = str(config.get("slug", "unknown")).strip()
-        print(f"[run] {slug}")
+    effective_workers = max_workers
+    if not continue_on_error and max_workers > 1:
+        print(
+            "[warn] CONTINUE_ON_ERROR=false is incompatible with parallel execution; falling back to max_workers=1.",
+            flush=True,
+        )
+        effective_workers = 1
 
-        try:
-            run_result, metric = run_single_experiment(
+    if effective_workers <= 1:
+        for config in selected_valid:
+            if stop_requested:
+                break
+
+            slug = str(config.get("slug", "unknown")).strip()
+            run_result, metric = execute_single_config(
                 config,
                 client=client,
                 model_name=model_name,
@@ -523,51 +586,61 @@ def main() -> int:
                 max_api_retries=max_api_retries,
                 retry_backoff_sec=retry_backoff_sec,
             )
-        except Exception as exc:  # noqa: BLE001
-            run_result = {
-                "id": config.get("id", slug),
-                "slug": slug,
-                "title": config.get("title", slug),
-                "model": model_name,
-                "started_at": utcnow_iso(),
-                "finished_at": utcnow_iso(),
-                "status": "failed",
-                "config_file": config.get("_file"),
-                "rounds": [],
-                "error": f"Unhandled runner exception: {exc}\n{traceback.format_exc()}",
+
+            raw_path = raw_dir / f"{slug}.json"
+            metric_path = metrics_dir / f"{slug}.json"
+            write_json(raw_path, run_result)
+            write_json(metric_path, metric)
+
+            print(
+                f"[done] {slug} status={metric.get('status')} score={metric.get('final_score')} "
+                f"latency={metric.get('latency_total_sec')}s",
+                flush=True,
+            )
+
+            if metric.get("status") in {"failed", "config_error"} and not continue_on_error:
+                print("[stop] Stopping due to failure and CONTINUE_ON_ERROR disabled.", flush=True)
+                stop_requested = True
+                break
+    else:
+        print(f"[parallel] max_workers={effective_workers}", flush=True)
+        with ThreadPoolExecutor(max_workers=effective_workers) as executor:
+            futures = {
+                executor.submit(
+                    execute_single_config,
+                    config,
+                    client=client,
+                    model_name=model_name,
+                    dry_run=dry_run,
+                    max_api_retries=max_api_retries,
+                    retry_backoff_sec=retry_backoff_sec,
+                ): config
+                for config in selected_valid
             }
-            metric = {
-                "status": "failed",
-                "final_score": 0.0,
-                "keyword_coverage": 0.0,
-                "format_score": 0.0,
-                "length_score": 0.0,
-                "coherence_score": 0.0,
-                "notes": "Unhandled runner exception.",
-            }
-            metric = enrich_metric(config, run_result, metric)
 
-        raw_path = raw_dir / f"{slug}.json"
-        metric_path = metrics_dir / f"{slug}.json"
-        write_json(raw_path, run_result)
-        write_json(metric_path, metric)
+            for future in as_completed(futures):
+                config = futures[future]
+                slug = str(config.get("slug", "unknown")).strip()
+                run_result, metric = future.result()
 
-        print(
-            f"[done] {slug} status={metric.get('status')} score={metric.get('final_score')} "
-            f"latency={metric.get('latency_total_sec')}s"
-        )
+                raw_path = raw_dir / f"{slug}.json"
+                metric_path = metrics_dir / f"{slug}.json"
+                write_json(raw_path, run_result)
+                write_json(metric_path, metric)
 
-        if metric.get("status") in {"failed", "config_error"} and not continue_on_error:
-            print("[stop] Stopping due to failure and CONTINUE_ON_ERROR disabled.")
-            stop_requested = True
-            break
+                print(
+                    f"[done] {slug} status={metric.get('status')} score={metric.get('final_score')} "
+                    f"latency={metric.get('latency_total_sec')}s",
+                    flush=True,
+                )
 
     summary = aggregate_summary(config_dir=config_dir, metrics_dir=metrics_dir)
     print(
         "[summary] "
         f"completed={summary['totals']['completed']} "
         f"total={summary['totals']['total']} "
-        f"avg_score={summary['totals']['average_final_score']}"
+        f"avg_score={summary['totals']['average_final_score']}",
+        flush=True,
     )
     return 0
 

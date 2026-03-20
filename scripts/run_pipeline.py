@@ -52,7 +52,7 @@ def main() -> int:
         if rc != 0:
             return rc
 
-    print("[done] Pipeline finished.")
+    print("[done] Pipeline finished.", flush=True)
     return 0
 
 
